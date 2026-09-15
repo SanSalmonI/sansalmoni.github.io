@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Rivera | Interactive OS Portfolio</title>
+    <meta name="description" content="An interactive desktop operating system portfolio experience showcasing full-stack projects, skills, terminal, and creative work.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome / RemixIcon Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/boot.css">
+    <link rel="stylesheet" href="./css/windows.css">
+    <link rel="stylesheet" href="./css/apps.css">
+</head>
+<body class="theme-midnight">
+
+    <!-- Hardware CRT / Monitor Frame Viewport -->
+    <div id="hardware-viewport">
+        <!-- Physical Bezel Frame -->
+        <div class="monitor-frame">
+            <div class="monitor-screen" id="monitor-screen">
+                
+                <!-- Overlay CRT Scanlines Effect (Toggleable) -->
+                <div class="crt-overlay" id="crt-overlay"></div>
+
+                <!-- 1. STARTUP BOOT SCREEN -->
+                <section id="boot-screen" class="active">
+                    <video class="boot-video-bg" src="./assets/StartupAnimation.mp4" autoplay muted playsinline loop></video>
+                    <div class="boot-content">
+                        <!-- Custom Brand Logo -->
+                        <div class="boot-logo-container">
+                            <h1 class="boot-brand">SANTIAGO <span class="highlight">SALMON</span></h1>
+                            <p class="boot-subtitle">Video Game Developer | Graphic Designer</p>
+                        </div>
+
+                        <!-- Boot Logs Terminal Stream -->
+                        <div class="boot-terminal">
+                            <div class="boot-log-line">[ 0.000000] Initializing Quantum Graphics & Physics Engine...</div>
+                            <div class="boot-log-line">[ 0.142018] Loading Unity & Unreal Engine Subsystems...</div>
+                            <div class="boot-log-line">[ 0.285110] 3D Renderer Check: Autodesk & Adobe Toolkits Mounted</div>
+                            <div class="boot-log-line">[ 0.419033] Mounting VFS: /dev/santiago_portfolio Mounted</div>
+                            <div class="boot-log-line">[ 0.651204] Loading User Modules: Santiago Salmon [Game Developer]</div>
+                            <div class="boot-log-line success">[ 0.892100] All Systems Nominal. Ready for User Auth.</div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="boot-progress-wrapper">
+                            <div class="boot-progress-bar" id="boot-progress"></div>
+                        </div>
+
+                        <!-- Prompt to Start -->
+                        <div class="boot-prompt" id="boot-prompt">
+                            <button class="btn-boot-start" id="btn-power-on">
+                                <i class="fa-solid fa-power-off"></i> PRESS START OR CLICK TO ENTER
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. USER LOGIN / LOCK SCREEN -->
+                <section id="lock-screen" class="hidden">
+                    <div class="lock-screen-bg"></div>
+                    <div class="lock-card-container">
+                        <div class="lock-clock" id="lock-clock">12:45 PM</div>
+                        <div class="lock-date" id="lock-date">Monday, July 27</div>
+
+                        <!-- User Profile Card -->
+                        <div class="user-profile-card" id="user-profile-card">
+                            <div class="avatar-ring">
+                                <img src="./assets/avatar.png" alt="Santiago Salmon Profile" class="user-avatar-img" id="user-avatar-img" onerror="this.src='./assets/avatar.jpg'">
+                                <span class="status-online-dot" title="Status: Active"></span>
+                            </div>
+                            <h2 class="user-name">Santiago Salmon</h2>
+                            <p class="user-role">Video Game Developer | Graphic Designer</p>
+                            
+                            <div class="lock-actions">
+                                <button class="btn-login" id="btn-login">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Sign In to Desktop
+                                </button>
+                            </div>
+                            <p class="login-hint"><i class="fa-solid fa-shield-halved"></i> Guest Session • Full Administrator Privileges</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. MAIN DESKTOP ENVIRONMENT -->
+                <main id="desktop-environment" class="hidden">
+                    <!-- Desktop Background Video Wallpaper -->
+                    <video id="desktop-wallpaper" class="desktop-wallpaper" src="./assets/desktop_wallpaper.mp4" autoplay loop muted playsinline></video>
+
+                    <!-- Desktop Icons Grid -->
+                    <div class="desktop-grid" id="desktop-grid">
+                        <!-- First Row: Software & Tool Apps -->
+                        <div class="desktop-row">
+                            <div class="desktop-icon" data-app="github" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/GithubIcon.png" alt="GitHub">
+                                </div>
+                                <span class="icon-label">GitHub</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="maya" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/MayaIcon.png" alt="Maya">
+                                </div>
+                                <span class="icon-label">Maya</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="blender" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/BlenderIcon.png" alt="Blender">
+                                </div>
+                                <span class="icon-label">Blender</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="krita" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/KritaIcon.png" alt="Krita">
+                                </div>
+                                <span class="icon-label">Krita</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="illustrator" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/AdobeIllustratorIcon.png" alt="Illustrator">
+                                </div>
+                                <span class="icon-label">Illustrator</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="photoshop" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/PhotoshopIcon.png" alt="Photoshop">
+                                </div>
+                                <span class="icon-label">Photoshop</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="unity" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/UnityIcon.png" alt="Unity">
+                                </div>
+                                <span class="icon-label">Unity</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="unreal" tabindex="0">
+                                <div class="icon-box icon-img-box">
+                                    <img src="./assets/UnrealIcon.png" alt="Unreal">
+                                </div>
+                                <span class="icon-label">Unreal</span>
+                            </div>
+                        </div>
+
+                        <!-- Second Row: Core Portfolio Apps -->
+                        <div class="desktop-row">
+                            <div class="desktop-icon" data-app="gallery" tabindex="0">
+                                <div class="icon-box icon-gallery">
+                                    <i class="fa-solid fa-photo-film"></i>
+                                </div>
+                                <span class="icon-label">Gallery</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="about" tabindex="0">
+                                <div class="icon-box icon-about">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                </div>
+                                <span class="icon-label">About Me</span>
+                            </div>
+
+                            <div class="desktop-icon" data-app="contact" tabindex="0">
+                                <div class="icon-box icon-contact">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </div>
+                                <span class="icon-label">Contact</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Windows Container -->
+                    <div id="windows-container"></div>
+
+                    <!-- Start Menu Popover -->
+                    <div id="start-menu" class="start-menu hidden">
+                        <div class="start-header">
+                            <div class="start-user-info">
+                                <img src="./assets/avatar.png" alt="Santiago Salmon Avatar" class="start-avatar" onerror="this.src='./assets/avatar.jpg'">
+                                <div>
+                                    <div class="start-username">Santiago Salmon</div>
+                                    <div class="start-usersub">ssalmonize@gmail.com</div>
+                                </div>
+                            </div>
+                            <button class="start-power-btn" id="btn-lock-os" title="Lock Desktop">
+                                <i class="fa-solid fa-lock"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="start-search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="start-search-input" placeholder="Search apps, tools, commands...">
+                        </div>
+
+                        <div class="start-pinned-section">
+                            <div class="start-section-title">Applications & Tools</div>
+                            <div class="start-apps-grid" id="start-apps-grid">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <div class="start-recent-section">
+                            <div class="start-section-title">Quick Links</div>
+                            <div class="start-quick-links">
+                                <a href="https://www.linkedin.com/in/santiago-salmon-ize-aa9424285/" target="_blank" class="quick-link-item">
+                                    <i class="fa-brands fa-linkedin"></i> LinkedIn Profile
+                                </a>
+                                <a href="mailto:ssalmonize@gmail.com" class="quick-link-item">
+                                    <i class="fa-solid fa-envelope"></i> ssalmonize@gmail.com
+                                </a>
+                                <a href="https://www.linkedin.com/in/santiago-salmon-ize-aa9424285/" target="_blank" class="quick-link-item">
+                                    <i class="fa-brands fa-github"></i> GitHub Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Right Click Context Menu -->
+                    <div id="context-menu" class="context-menu hidden">
+                        <div class="context-item" id="ctx-refresh"><i class="fa-solid fa-rotate-right"></i> Refresh Desktop</div>
+                        <div class="context-item" id="ctx-projects"><i class="fa-solid fa-folder-open"></i> Open Gallery</div>
+                        <div class="context-item" id="ctx-terminal"><i class="fa-solid fa-terminal"></i> Open Terminal</div>
+                        <div class="context-divider"></div>
+                        <div class="context-item" id="ctx-wallpaper"><i class="fa-solid fa-image"></i> Change Wallpaper</div>
+                        <div class="context-item" id="ctx-settings"><i class="fa-solid fa-gear"></i> System Settings</div>
+                    </div>
+
+                    <!-- Taskbar & System Tray -->
+                    <footer id="taskbar" class="taskbar">
+                        <div class="taskbar-left-controls" style="display:flex; align-items:center; gap:8px;">
+                            <!-- Skills & App Search Button -->
+                            <button class="start-btn" id="start-btn" title="App Search & Skills">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>Skills & Search</span>
+                            </button>
+
+                            <!-- Direct Terminal Launcher Button -->
+                            <button class="taskbar-item" id="taskbar-terminal-btn" title="Open Terminal CLI">
+                                <i class="fa-solid fa-terminal" style="color:var(--accent-cyan);"></i>
+                                <span>Terminal</span>
+                            </button>
+                        </div>
+
+                        <!-- Active Application Items Container -->
+                        <div class="taskbar-apps" id="taskbar-apps"></div>
+
+                        <!-- System Tray -->
+                        <div class="system-tray">
+                            <button class="tray-icon-btn" id="btn-toggle-sound" title="Toggle UI Audio (Web Audio Synth)">
+                                <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+                            </button>
+                            
+                            <button class="tray-icon-btn" id="btn-toggle-crt" title="Toggle CRT Scanlines">
+                                <i class="fa-solid fa-tv"></i>
+                            </button>
+
+                            <button class="tray-icon-btn" id="btn-toggle-wallpaper" title="Pause / Play Video Wallpaper">
+                                <i class="fa-solid fa-pause" id="wallpaper-icon"></i>
+                            </button>
+
+                            <button class="tray-icon-btn" id="btn-toggle-fullscreen" title="Toggle Fullscreen">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+
+                            <div class="tray-time-widget" id="tray-time-widget" title="Current System Time">
+                                <span id="tray-time">12:00:00 PM</span>
+                                <span id="tray-date">Jul 27, 2026</span>
+                            </div>
+                        </div>
+                    </footer>
+                </main>
+
+            </div>
+            
+            <!-- Monitor Hardware Bezel Footer Details -->
+            <div class="monitor-hardware-bar">
+                <div class="brand-badge">SANTIAGO SALMON WORKSTATION</div>
+                <div class="power-led" id="power-led" title="Power LED Status"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast System -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- JavaScript Files -->
+    <script src="./js/audio.js"></script>
+    <script src="./js/boot.js"></script>
+    <script src="./js/window-manager.js"></script>
+    <script src="./js/taskbar.js"></script>
+    <script src="./js/apps.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
