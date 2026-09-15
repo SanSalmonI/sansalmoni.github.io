@@ -20,14 +20,14 @@ window.appRegistry = {
                             Access game dev repositories, 3D modeling scripts, Unity/Unreal projects, and graphic design resources.
                         </p>
                     </div>
-                    <a href="https://www.linkedin.com/in/santiago-salmon-ize-aa9424285/" target="_blank" class="btn-boot-start" style="padding:12px 24px; font-size:0.95rem; display:inline-flex; align-items:center; gap:10px; text-decoration:none; margin-top:10px;">
+                    <a href="https://github.com/SanSalmonI" target="_blank" class="btn-boot-start" style="padding:12px 24px; font-size:0.95rem; display:inline-flex; align-items:center; gap:10px; text-decoration:none; margin-top:10px;">
                         <i class="fa-brands fa-github"></i> Launch GitHub Profile
                     </a>
                 </div>
             `;
         },
         onMount: function() {
-            window.open("https://www.linkedin.com/in/santiago-salmon-ize-aa9424285/", "_blank");
+            window.open("https://github.com/SanSalmonI", "_blank");
         }
     },
 
@@ -334,11 +334,18 @@ window.appRegistry = {
                                     <div style="font-size:0.75rem; color:var(--text-secondary);">ssalmonize@gmail.com</div>
                                 </div>
                             </a>
-                            <a href="https://www.linkedin.com/in/santiago-salmon-ize-aa9424285/" target="_blank" style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; text-decoration:none;">
+                            <a href="https://github.com/SanSalmonI" target="_blank" style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; text-decoration:none;">
                                 <i class="fa-brands fa-github" style="font-size:1.2rem; color:#fff;"></i>
                                 <div>
                                     <div style="font-weight:700;">GitHub</div>
                                     <div style="font-size:0.75rem; color:var(--text-secondary);">GitHub Profile</div>
+                                </div>
+                            </a>
+                            <a href="https://santiagosalmon.my.canva.site/portafolio" target="_blank" style="display:flex; align-items:center; gap:10px; padding:10px; background:rgba(0,230,118,0.08); border:1px solid rgba(0,230,118,0.2); border-radius:8px; color:#fff; text-decoration:none;">
+                                <i class="fa-solid fa-globe" style="font-size:1.2rem; color:var(--accent-emerald);"></i>
+                                <div>
+                                    <div style="font-weight:700;">Website</div>
+                                    <div style="font-size:0.75rem; color:var(--text-secondary);">Canva Portfolio</div>
                                 </div>
                             </a>
                         </div>

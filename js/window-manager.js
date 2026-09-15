@@ -87,10 +87,23 @@ class WindowManager {
             appConfig.onMount(document.getElementById(`win-body-${appId}`));
         }
 
-        // Notify Taskbar
+        // Notify Taskbar & Highlight Desktop Icon
         if (window.taskbar) {
             window.taskbar.renderTaskbarApps();
         }
+        this.highlightDesktopIcon(appId);
+    }
+
+    highlightDesktopIcon(appId) {
+        const desktopIcons = document.querySelectorAll('.desktop-icon');
+        desktopIcons.forEach(icon => {
+            if (icon.dataset.app === appId) {
+                icon.classList.add('selected');
+                icon.focus();
+            } else {
+                icon.classList.remove('selected');
+            }
+        });
     }
 
     focusWindow(appId) {
@@ -108,6 +121,7 @@ class WindowManager {
         if (window.taskbar) {
             window.taskbar.renderTaskbarApps();
         }
+        this.highlightDesktopIcon(appId);
     }
 
     minimizeWindow(appId) {
