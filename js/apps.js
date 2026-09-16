@@ -2,6 +2,201 @@
    APPLICATION REGISTRY & INNER APP RENDERERS
    ========================================================================== */
 
+// 1. CENTRAL PORTFOLIO ITEMS REGISTRY (FILTERABLE PER APP)
+window.portfolioItems = [
+    {
+        id: "maya-1",
+        title: "3D Character Design LowTopo",
+        software: ["blender", "maya"],
+        type: "3d",
+        mediaType: "image",
+        src: "./assets/gallery/Santiago Salmon Portfolio (5).png",
+        fallback: "./assets/Fallback.jpg",
+        description: "Character modeling, Optimized topology, and material for expressions and customization in Autodesk Maya.",
+        tags: ["Maya", "Character Design"]
+    },
+    {
+        id: "maya-2",
+        title: "Low Poly Penguin",
+        software: ["blender", "maya"],
+        type: "3d",
+        mediaType: "image",
+        src: "./assets/gallery/Santiago Salmon Portfolio (6).png",
+        fallback: "./assets/Fallback.jpg",
+        description: "Character with Optimized topology, and materials.",
+        tags: ["Maya", "Arnold"]
+    },
+    {
+        id: "blender-1",
+        title: "Bow & arrow",
+        software: ["blender", "maya"],
+        type: "3d",
+        mediaType: "image",
+        src: "./assets/gallery/Santiago Salmon Portfolio.png",
+        fallback: "./assets/Fallback.jpg",
+        description: "Weapon with organic shapes using deformers in blender.",
+        tags: ["Blender", "Cycles", "Environment Lighting"]
+    },
+    {
+        id: "blender-2",
+        title: "Fancy Chair Asset & Prop Modeling",
+        software: ["blender", "maya"],
+        type: "3d",
+        mediaType: "image",
+        src: "./assets/gallery/Santiago Salmon Portfolio (2).png",
+        fallback: "./assets/Fallback.jpg",
+        description: "Hard surface videogame prop modeling and high-to-low poly baking workflow.",
+        tags: ["Blender", "Prop Modeling", "High Poly"]
+    },
+    {
+        id: "krita-1",
+        title: "2D Character Concept Art & Color Script",
+        software: ["krita"],
+        type: "2d",
+        mediaType: "image",
+        src: "./assets/gallery/render3.jpg",
+        fallback: "./assets/project_ecom_app.jpg",
+        description: "Character concept blocking, digital color script, and illustration created in Krita.",
+        tags: ["Krita", "Concept Art", "Digital Painting"]
+    },
+    {
+        id: "krita-2",
+        title: "Game Mechanics Storyboard & Artwork",
+        software: ["krita", "photoshop"],
+        type: "2d",
+        mediaType: "image",
+        src: "./assets/project_ecom_app.jpg",
+        description: "Digital pre-production storyboarding and environment concept sketches.",
+        tags: ["Krita", "Storyboards", "Visual Art"]
+    },
+    {
+        id: "illustrator-1",
+        title: "Vector Logo & Brand Identity System",
+        software: ["illustrator"],
+        type: "2d",
+        mediaType: "image",
+        src: "./assets/gallery/render2.jpg",
+        description: "Scalable vector graphics, typography, and brand identity design produced in Adobe Illustrator.",
+        tags: ["Illustrator", "Vector Art", "Branding", "Logo"]
+    },
+    {
+        id: "photoshop-1",
+        title: "Matte Painting & Photo Post-Processing",
+        software: ["photoshop"],
+        type: "2d",
+        mediaType: "image",
+        src: "./assets/gallery/render1.jpg",
+        description: "Post-processing, color grading, and texture compositing in Adobe Photoshop.",
+        tags: ["Photoshop", "Matte Painting", "Textures"]
+    },
+    {
+        id: "unity-1",
+        title: "Unity VR Interaction & Gameplay Demo",
+        software: ["unity"],
+        type: "game",
+        mediaType: "video",
+        src: "./assets/StartupAnimation.mp4",
+        description: "Virtual Reality interactive prototype built in Unity with custom C# physics scripts.",
+        tags: ["Unity", "VR", "C# Gameplay", "Physics"]
+    },
+    {
+        id: "unreal-1",
+        title: "Unreal Engine 5 Real-Time Environment Reel",
+        software: ["unreal"],
+        type: "game",
+        mediaType: "video",
+        src: "./assets/desktop_wallpaper.mp4",
+        description: "Real-time cinematic environment demo rendered in Unreal Engine 5 using Nanite & Lumen.",
+        tags: ["Unreal Engine 5", "Lumen", "Cinematic", "Blueprints"]
+    }
+];
+
+// Helper: Filter & Render Media Cards per Software Tool
+window.renderFilteredAppMedia = function(softwareKey) {
+    const filtered = window.portfolioItems.filter(item => item.software.includes(softwareKey));
+    
+    if (filtered.length === 0) {
+        return `
+            <div style="background:rgba(255,255,255,0.02); border:1px dashed rgba(255,255,255,0.1); border-radius:12px; padding:30px; text-align:center; color:var(--text-muted);">
+                <i class="fa-solid fa-folder-open" style="font-size:2rem; color:var(--accent-cyan); margin-bottom:10px;"></i>
+                <p style="font-size:0.9rem;">No custom renders added for <strong style="color:#fff;">${softwareKey}</strong> yet.</p>
+                <p style="font-size:0.78rem; margin-top:6px;">Add files to <code style="color:var(--accent-emerald);">./assets/gallery/</code> and tag them in <code style="color:var(--accent-cyan);">window.portfolioItems</code>!</p>
+            </div>
+        `;
+    }
+
+    let html = `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">`;
+    filtered.forEach(item => {
+        const isVideo = item.mediaType === 'video';
+        html += `
+            <div class="media-card-item" onclick="window.openPortfolioModal('${item.id}')" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; cursor:pointer; transition:all 0.2s;">
+                <div style="position:relative; width:100%; height:150px; background:#000; overflow:hidden;">
+                    ${isVideo ? 
+                        `<video src="${item.src}" style="width:100%; height:100%; object-fit:cover;" autoplay loop muted playsinline></video>
+                         <div style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.7); color:var(--accent-cyan); padding:4px 8px; border-radius:4px; font-size:0.7rem; font-weight:700;"><i class="fa-solid fa-video"></i> VIDEO</div>` :
+                        `<img src="${item.src}" alt="${item.title}" onerror="this.src='${item.fallback || './assets/project_dev_tool.jpg'}'" style="width:100%; height:100%; object-fit:cover;">`
+                    }
+                    <div class="media-hover-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,242,254,0.25); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s;">
+                        <i class="fa-solid fa-expand" style="font-size:1.5rem; color:#fff;"></i>
+                    </div>
+                </div>
+                <div style="padding:12px;">
+                    <h4 style="font-size:0.9rem; font-family:var(--font-heading); color:#fff; font-weight:700;">${item.title}</h4>
+                    <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:4px;">${item.description}</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">
+                        ${item.tags.map(t => `<span style="font-size:0.68rem; background:rgba(0,242,254,0.1); color:var(--accent-cyan); border:1px solid rgba(0,242,254,0.2); padding:2px 6px; border-radius:4px;">${t}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    html += `</div>`;
+    return html;
+};
+
+// Global Lightbox Controls
+window.openPortfolioModal = function(itemId) {
+    const item = window.portfolioItems.find(i => i.id === itemId);
+    if (!item) return;
+
+    const modal = document.getElementById('portfolio-lightbox-modal');
+    const mediaContainer = document.getElementById('portfolio-modal-media-container');
+    const titleEl = document.getElementById('portfolio-modal-title');
+    const descEl = document.getElementById('portfolio-modal-desc');
+    const tagsEl = document.getElementById('portfolio-modal-tags');
+
+    if (!modal || !mediaContainer) return;
+
+    if (item.mediaType === 'video') {
+        mediaContainer.innerHTML = `<video src="${item.src}" controls autoplay loop style="width:100%; max-height:480px;"></video>`;
+    } else {
+        mediaContainer.innerHTML = `<img src="${item.src}" alt="${item.title}" onerror="this.src='${item.fallback || './assets/project_dev_tool.jpg'}'" style="width:100%; max-height:480px; object-fit:contain;">`;
+    }
+
+    if (titleEl) titleEl.textContent = item.title;
+    if (descEl) descEl.textContent = item.description;
+    if (tagsEl) {
+        tagsEl.innerHTML = item.tags.map(t => `<span style="font-size:0.75rem; background:rgba(0,242,254,0.12); color:var(--accent-cyan); border:1px solid rgba(0,242,254,0.3); padding:3px 8px; border-radius:6px;">${t}</span>`).join('');
+    }
+
+    modal.classList.remove('hidden');
+};
+
+window.closePortfolioModal = function(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
+    const modal = document.getElementById('portfolio-lightbox-modal');
+    const mediaContainer = document.getElementById('portfolio-modal-media-container');
+    if (modal) modal.classList.add('hidden');
+    if (mediaContainer) mediaContainer.innerHTML = '';
+};
+
+// Esc key listener for modal closing
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closePortfolioModal();
+    }
+});
+
 window.appRegistry = {
     // 1. GITHUB TOOL & LAUNCHER APP
     github: {
@@ -37,21 +232,18 @@ window.appRegistry = {
         icon: "fa-solid fa-cube",
         iconImg: "./assets/MayaIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/MayaIcon.png" alt="Maya" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/MayaIcon.png" alt="Maya" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Autodesk Maya</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">3D Character Design, Rigging, & Architectural Blueprints Modeling</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Autodesk Maya Workspace</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered 3D Models, Character Rigs & Architectural Blueprints</p>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-                        <img src="./assets/project_dev_tool.jpg" alt="3D Render" style="width:100%; height:160px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
-                        <img src="./assets/project_ai_dash.jpg" alt="3D Model" style="width:100%; height:160px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
-                    </div>
+                    ${window.renderFilteredAppMedia('maya')}
                 </div>
             `;
         }
@@ -63,20 +255,18 @@ window.appRegistry = {
         icon: "fa-solid fa-cubes",
         iconImg: "./assets/BlenderIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/BlenderIcon.png" alt="Blender" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/BlenderIcon.png" alt="Blender" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Blender 3D Suite</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">3D Modeling, Environment Lighting, & Cycles Rendering</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Blender 3D Suite Workspace</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered 3D Renders, Hard Surface Models & Lighting Assets</p>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-                        <img src="./assets/project_dev_tool.jpg" alt="Blender Render" style="width:100%; height:160px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
-                    </div>
+                    ${window.renderFilteredAppMedia('blender')}
                 </div>
             `;
         }
@@ -84,21 +274,22 @@ window.appRegistry = {
 
     // 4. KRITA TOOL APP
     krita: {
-        title: "Krita Digital Painting",
+        title: "Krita Digital Painting Studio",
         icon: "fa-solid fa-paintbrush",
         iconImg: "./assets/KritaIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/KritaIcon.png" alt="Krita" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/KritaIcon.png" alt="Krita" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Krita Digital Painting</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">2D Concept Art, Illustration, & Texture Painting Studio</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Krita Digital Art Studio</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered 2D Concept Art, Color Scripts & Digital Paintings</p>
                         </div>
                     </div>
+                    ${window.renderFilteredAppMedia('krita')}
                 </div>
             `;
         }
@@ -110,17 +301,18 @@ window.appRegistry = {
         icon: "fa-solid fa-bezier-curve",
         iconImg: "./assets/AdobeIllustratorIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/AdobeIllustratorIcon.png" alt="Illustrator" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/AdobeIllustratorIcon.png" alt="Illustrator" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Adobe Illustrator</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Vector Graphics, Logo Design, & Brand Identity Creation</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Adobe Illustrator Vector Studio</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered Vector Art, Logos & Brand Identity Designs</p>
                         </div>
                     </div>
+                    ${window.renderFilteredAppMedia('illustrator')}
                 </div>
             `;
         }
@@ -132,17 +324,18 @@ window.appRegistry = {
         icon: "fa-solid fa-image",
         iconImg: "./assets/PhotoshopIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/PhotoshopIcon.png" alt="Photoshop" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/PhotoshopIcon.png" alt="Photoshop" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Adobe Photoshop</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Digital Image Post-Processing & Graphic Assets Creation</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Adobe Photoshop Workshop</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered Post-Processing, Matte Paintings & Graphics</p>
                         </div>
                     </div>
+                    ${window.renderFilteredAppMedia('photoshop')}
                 </div>
             `;
         }
@@ -154,17 +347,18 @@ window.appRegistry = {
         icon: "fa-solid fa-gamepad",
         iconImg: "./assets/UnityIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/UnityIcon.png" alt="Unity" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/UnityIcon.png" alt="Unity" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Unity Game Engine</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Virtual Reality Game Development, C# Gameplay Systems, & Character Controls</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Unity Game Engine Projects</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered C# Gameplay Demos, VR Prototypes & Physics Mechanics</p>
                         </div>
                     </div>
+                    ${window.renderFilteredAppMedia('unity')}
                 </div>
             `;
         }
@@ -176,51 +370,126 @@ window.appRegistry = {
         icon: "fa-solid fa-vr-cardboard",
         iconImg: "./assets/UnrealIcon.png",
         width: 780,
-        height: 520,
+        height: 540,
         render: function() {
             return `
                 <div class="app-detail-container" style="display:flex; flex-direction:column; gap:20px;">
-                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px; border-radius:12px;">
-                        <img src="./assets/UnrealIcon.png" alt="Unreal" style="width:56px; height:56px; object-fit:contain;">
+                    <div style="display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
+                        <img src="./assets/UnrealIcon.png" alt="Unreal" style="width:48px; height:48px; object-fit:contain;">
                         <div>
-                            <h2 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--accent-cyan);">Unreal Engine 5</h2>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">High-Fidelity Real-Time Environments, Blueprints, & Visual Effects</p>
+                            <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);">Unreal Engine 5 Real-Time Showcase</h2>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Filtered Nanite & Lumen Real-Time Renders, Video Reels & Environments</p>
                         </div>
                     </div>
+                    ${window.renderFilteredAppMedia('unreal')}
                 </div>
             `;
         }
     },
 
-    // 9. GALLERY APP
+    // 9. GALLERY APP (Central Showcase featuring Category Filters & Search)
     gallery: {
         title: "Gallery",
         icon: "fa-solid fa-photo-film",
-        width: 820,
-        height: 560,
+        width: 860,
+        height: 600,
         render: function() {
             return `
                 <div class="gallery-container" style="display:flex; flex-direction:column; gap:16px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);"><i class="fa-solid fa-images"></i> Santiago Salmon Gallery</h2>
-                        <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-folder-open"></i> ./assets/gallery/</span>
-                    </div>
-                    <div class="gallery-grid">
-                        <div class="gallery-item">
-                            <img src="./assets/gallery/render1.jpg" alt="Gallery Artwork 1" onerror="this.src='./assets/project_ai_dash.jpg'">
-                            <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="./assets/gallery/render2.jpg" alt="Gallery Artwork 2" onerror="this.src='./assets/project_dev_tool.jpg'">
-                            <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="./assets/gallery/render3.jpg" alt="Gallery Artwork 3" onerror="this.src='./assets/project_ecom_app.jpg'">
-                            <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <h2 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);"><i class="fa-solid fa-images"></i> Master Portfolio Gallery</h2>
+                        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:6px 12px; display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted); font-size:0.85rem;"></i>
+                            <input type="text" id="gallery-search-input" placeholder="Search title or tag..." style="background:transparent; border:none; outline:none; color:#fff; font-size:0.85rem; width:150px;">
                         </div>
                     </div>
+                    
+                    <!-- Gallery Software & Type Filter Tabs -->
+                    <div class="filter-tabs" style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button class="filter-btn active" data-filter="all">All Works</button>
+                        <button class="filter-btn" data-filter="3d">3D Renders & Models</button>
+                        <button class="filter-btn" data-filter="2d">2D Art & Concept</button>
+                        <button class="filter-btn" data-filter="game">Game Demos & Videos</button>
+                        <button class="filter-btn" data-filter="maya">Maya</button>
+                        <button class="filter-btn" data-filter="blender">Blender</button>
+                        <button class="filter-btn" data-filter="krita">Krita</button>
+                        <button class="filter-btn" data-filter="unity">Unity</button>
+                    </div>
+
+                    <!-- Filtered Items Grid -->
+                    <div id="gallery-master-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:16px;"></div>
                 </div>
             `;
+        },
+        onMount: function(container) {
+            const grid = container.querySelector('#gallery-master-grid');
+            const searchInput = container.querySelector('#gallery-search-input');
+            const filterBtns = container.querySelectorAll('.filter-btn');
+
+            let currentFilter = 'all';
+            let currentQuery = '';
+
+            function updateGalleryDisplay() {
+                if (!grid) return;
+                const items = window.portfolioItems.filter(item => {
+                    const matchesCategory = currentFilter === 'all' || 
+                        item.type === currentFilter || 
+                        item.software.includes(currentFilter);
+
+                    const q = currentQuery.toLowerCase();
+                    const matchesQuery = !q || 
+                        item.title.toLowerCase().includes(q) || 
+                        item.description.toLowerCase().includes(q) ||
+                        item.tags.some(t => t.toLowerCase().includes(q));
+
+                    return matchesCategory && matchesQuery;
+                });
+
+                if (items.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1; padding:40px; text-align:center; color:var(--text-muted);">No portfolio items found matching current filters.</div>`;
+                    return;
+                }
+
+                grid.innerHTML = items.map(item => `
+                    <div class="media-card-item" onclick="window.openPortfolioModal('${item.id}')" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; cursor:pointer; transition:all 0.2s;">
+                        <div style="position:relative; width:100%; height:150px; background:#000; overflow:hidden;">
+                            ${item.mediaType === 'video' ? 
+                                `<video src="${item.src}" style="width:100%; height:100%; object-fit:cover;" autoplay loop muted playsinline></video>
+                                 <div style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.7); color:var(--accent-cyan); padding:4px 8px; border-radius:4px; font-size:0.7rem; font-weight:700;"><i class="fa-solid fa-video"></i> VIDEO</div>` :
+                                `<img src="${item.src}" alt="${item.title}" onerror="this.src='${item.fallback || './assets/project_dev_tool.jpg'}'" style="width:100%; height:100%; object-fit:cover;">`
+                            }
+                            <div class="media-hover-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,242,254,0.25); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s;">
+                                <i class="fa-solid fa-expand" style="font-size:1.5rem; color:#fff;"></i>
+                            </div>
+                        </div>
+                        <div style="padding:12px;">
+                            <h4 style="font-size:0.9rem; font-family:var(--font-heading); color:#fff; font-weight:700;">${item.title}</h4>
+                            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:4px;">${item.description}</p>
+                            <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px;">
+                                ${item.tags.map(t => `<span style="font-size:0.68rem; background:rgba(0,242,254,0.1); color:var(--accent-cyan); border:1px solid rgba(0,242,254,0.2); padding:2px 6px; border-radius:4px;">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    updateGalleryDisplay();
+                });
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    currentQuery = e.target.value;
+                    updateGalleryDisplay();
+                });
+            }
+
+            updateGalleryDisplay();
         }
     },
 

@@ -299,6 +299,19 @@
         </div>
     </div>
 
+    <!-- Interactive Media Portfolio Modal Lightbox -->
+    <div id="portfolio-lightbox-modal" class="portfolio-modal hidden" onclick="window.closePortfolioModal(event)">
+        <div class="portfolio-modal-content" onclick="event.stopPropagation()">
+            <button class="portfolio-modal-close" onclick="window.closePortfolioModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="portfolio-modal-media-container" class="portfolio-modal-media"></div>
+            <div class="portfolio-modal-info">
+                <h3 id="portfolio-modal-title" style="font-family:var(--font-heading); font-size:1.3rem; color:var(--accent-cyan);"></h3>
+                <p id="portfolio-modal-desc" style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;"></p>
+                <div id="portfolio-modal-tags" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Toast System -->
     <div id="toast-container" class="toast-container"></div>
 
